@@ -1,0 +1,38 @@
+trigger:
+- main
+
+pool:
+  vmImage: 'ubuntu-latest'
+
+steps:
+
+# 1. Build da aplicação
+- task: NodeTool@0
+  inputs:
+    versionSpec: '18.x'
+  displayName: 'Instalar Node.js'
+
+- script: |
+    npm install
+    npm run build
+  displayName: 'Build da aplicação'
+
+# 2. Testes
+- script: |
+    npm test
+  displayName: 'Executar testes'
+
+# 3. SAST (exemplo com ferramenta integrada ou externa)
+- script: |
+    echo "Executando SAST (ex: SonarCloud)"
+  displayName: 'SAST Scan'
+
+# 4. Deploy (exemplo simples)
+- script: |
+    echo "Deploy da aplicação"
+  displayName: 'Deploy'
+
+# 5. DAST (teste depois do deploy)
+- script: |
+    echo "Executando DAST (ex: OWASP ZAP)"
+  displayName: 'DAST Scan'
